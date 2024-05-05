@@ -42,6 +42,8 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-transform-private-property-in-object": "^7.24.5",
+    "@types/react-window": "^1.8.8",
     "react-arborist": "^3.4.0",
     "uuid": "^9.0.1"
   }

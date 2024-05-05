@@ -1,18 +1,33 @@
-import {Row, Table, Text, Variable} from "./model";
+import {ElementType, Element} from "./model";
 import {v4 as uuidv4} from 'uuid';
 
-export const data: Table[] = [
-    new Table(uuidv4(), [
-        new Row(uuidv4(), [
-            new Text(uuidv4(), "aaa"),
-            new Text(uuidv4(), "bbb")
-        ]),
-        new Row(uuidv4(), [
-            new Variable(uuidv4(), "ccc"),
-            new Variable(uuidv4(), "ddd")
-        ]),
-        new Row(uuidv4(), [
-            new Variable(uuidv4(), "eee"),
-        ]),
-    ])
+export const data: Element[] = [
+  {
+    kind: ElementType.Table,
+    id: uuidv4(),
+    children: [
+      { kind: ElementType.Row,
+        id: uuidv4(),
+        children: [
+          { kind: ElementType.Text, id: uuidv4(), text: "aaa", span: 1 },
+          { kind: ElementType.Text, id: uuidv4(), text: "bbb", span: 1 }
+        ]},
+      { kind: ElementType.Row,
+        id: uuidv4(),
+        children: [
+          { kind: ElementType.Variable, id: uuidv4(), key: "ccc", span: 1 },
+          { kind: ElementType.Variable, id: uuidv4(), key: "ddd", span: 1 }
+        ]},
+    ]},
+  {
+    kind: ElementType.Table,
+    id: uuidv4(),
+    children: [
+      { kind: ElementType.Row,
+        id: uuidv4(),
+        children: [
+          { kind: ElementType.Text, id: uuidv4(), text: "eee", span: 1 },
+          { kind: ElementType.Text, id: uuidv4(), text: "fff", span: 1 }
+        ]}
+    ]}
 ];
