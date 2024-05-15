@@ -26,9 +26,14 @@ const Node = ({node, style, dragHandle}: NodeRendererProps<Element>) =>
 const NodeElem = ({element}: {element: Element})  => {
   switch (element.kind) {
     case ElementType.Table:
-      return <div>{"📁" + element.id.substring(0, 5)}</div>;
+      return <div>📁
+        <button>+ Row</button>
+      </div>;
     case ElementType.Row:
-      return <div>{"➡" + element.id.substring(0, 5)}</div>;
+      return <div>➡
+        <button>+ Text</button>
+        <button>+ Variable</button>
+      </div>;
     case ElementType.Text:
       return <div>{"📝" + element.id.substring(0, 5)}</div>;
     case ElementType.Variable:
@@ -76,7 +81,7 @@ function App() {
   return (
     <div className="App" style={{display: "flex", flexDirection: "row"}}>
       <div className="App" style={{display: "flex", flexDirection: "column"}}>
-        <button onClick={addTable}>Add table</button>
+        <button onClick={addTable}>+ Table</button>
         <Tree
           data={model}
           onCreate={onCreate}
