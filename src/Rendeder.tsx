@@ -1,7 +1,7 @@
 import {Cell, Element, ElementType, Row, Table} from "./model";
 
 const TableC = (model: Table) =>
-    <table key={model.id} style={{paddingBottom: "20px"}}>
+    <table key={model.id} style={{marginBottom: "20px", borderCollapse: "collapse"}}>
         <tbody>
             {model.children.map(RowC)}
         </tbody>
