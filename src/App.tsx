@@ -20,20 +20,19 @@ import {v4 as uuidv4} from "uuid";
 
 const Node = ({node, style, dragHandle}: NodeRendererProps<Element>) =>
       <div style={style} ref={dragHandle} key={node.id}>
-        {icon(node.data.kind)}
-        {" " + node.data.id.substring(0, 5)}
+        <NodeElem element={node.data} />
       </div>;
 
-const icon = (elementType: ElementType)  => {
-  switch (elementType) {
+const NodeElem = ({element}: {element: Element})  => {
+  switch (element.kind) {
     case ElementType.Table:
-      return "📁";
+      return <div>{"📁" + element.id.substring(0, 5)}</div>;
     case ElementType.Row:
-      return "➡";
+      return <div>{"➡" + element.id.substring(0, 5)}</div>;
     case ElementType.Text:
-      return "📝";
+      return <div>{"📝" + element.id.substring(0, 5)}</div>;
     case ElementType.Variable:
-      return "🔑";
+      return <div>{"🔑" + element.id.substring(0, 5)}</div>;
   }
 }
 
@@ -72,7 +71,7 @@ function App() {
   };
   const onDelete: DeleteHandler<Element>  = ({ ids }) => {console.log("onDelete");};
   const addTable = useCallback(() => setModel(draft =>
-  {draft.push({kind: ElementType.Table, id: uuidv4(), children: []})}
+    {draft.push({kind: ElementType.Table, id: uuidv4(), children: []})}
   ), []);
   return (
     <div className="App" style={{display: "flex", flexDirection: "row"}}>
