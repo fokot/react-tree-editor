@@ -111,7 +111,13 @@ function App() {
       parent.children = parent.children.filter(child => child.id !== r.id);
     });
   };
-  const addCell = (r: Row) => {};
+  const addCell = (r: Row) => {
+    setModel(model => {
+      // fixme
+      const parent = findParentRow(model, r.id);
+      parent.children.push({kind: ElementType.Text, id: uuidv4(), text: "", span: 1});
+    });
+  };
   const deleteCell = (c: Cell) => {
     setModel(model => {
       const parent = findParentRow(model, c.id);
