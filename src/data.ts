@@ -1,7 +1,7 @@
-import {ElementType, Element} from "./model";
+import {ElementType, Element, Table} from "./model";
 import {v4 as uuidv4} from 'uuid';
 
-export const data: Element[] = [
+export const data: Table[] = [
   {
     kind: ElementType.Table,
     id: uuidv4(),
@@ -31,3 +31,11 @@ export const data: Element[] = [
         ]}
     ]}
 ];
+
+export const sowData = {
+  sowId: "12345",
+  location: "Farm 123",
+  birthDay: "2021-01-01",
+  breed: "AAA",
+  servingDate: "2021-01-01",
+}
