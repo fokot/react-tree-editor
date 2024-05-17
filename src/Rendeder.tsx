@@ -23,7 +23,6 @@ const CellC = (model: Cell, sow: Object) => {
     case ElementType.Variable:
       // @ts-ignore
       const text = sow[model.key] as string || `?${model.key}?`;
-      console.log(sow, model.key, text);
       return <td key={model.id} colSpan={model.span}>{text}</td>;
   }
 };
