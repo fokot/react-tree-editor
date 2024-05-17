@@ -15,8 +15,8 @@ export const data: Table[] = [
       { kind: ElementType.Row,
         id: uuidv4(),
         children: [
-          { kind: ElementType.Variable, id: uuidv4(), key: "ccc", span: 1 },
-          { kind: ElementType.Variable, id: uuidv4(), key: "ddd", span: 1 }
+          { kind: ElementType.Variable, id: uuidv4(), key: "sowId", span: 1 },
+          { kind: ElementType.Variable, id: uuidv4(), key: "breed", span: 1 }
         ]},
     ]},
   {

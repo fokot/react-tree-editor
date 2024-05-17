@@ -64,6 +64,10 @@ export const findRow = (model: Table[], id: string): Row => {
   throw new Error( `no row found for ${id}`);
 }
 
+export const AllSowKeys = ["sowId", "location", "birthDay", "breed", "servingDate"] as const;
+
+export type SowKey = typeof AllSowKeys[number];
+
 export interface Table {
   kind: ElementType.Table;
   id: string;
@@ -86,7 +90,7 @@ export interface Text {
 export interface Variable {
   kind: ElementType.Variable;
   id: string;
-  key: string;
+  key: SowKey;
   span: number;
 }
 

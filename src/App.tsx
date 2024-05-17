@@ -11,7 +11,7 @@ import {
   Row,
   Table,
   findParentRow,
-  findRow, Cell
+  findRow, Cell, AllSowKeys, SowKey
 } from "./model";
 import {RendererC} from "./Rendeder";
 import {DeleteHandler, RenameHandler} from "react-arborist/src/types/handlers";
@@ -27,12 +27,13 @@ interface UpdatersProps {
   deleteTable: (t: Table) => void;
   addRow: (t: Table) => void;
   deleteRow: (r: Row) => void;
-  addCell: (r: Row) => void;
+  addText: (r: Row) => void;
+  addVariable: (r: Row) => void;
   deleteCell: (c: Cell) => void;
   updateCell: (c: Cell) => void;
 }
 
-const NodeElem = ({element, deleteTable, addRow, deleteRow, addCell, deleteCell, updateCell}: {element: Element} & UpdatersProps)  => {
+const NodeElem = ({element, deleteTable, addRow, deleteRow, addText, addVariable, deleteCell, updateCell}: {element: Element} & UpdatersProps)  => {
   switch (element.kind) {
     case ElementType.Table:
       return <div>📁
@@ -42,16 +43,26 @@ const NodeElem = ({element, deleteTable, addRow, deleteRow, addCell, deleteCell,
     case ElementType.Row:
       return <div>➡
         <button onClick={() => deleteRow(element)}>❌</button>
-        <button onClick={() => addCell(element)}>➡</button>
+        <button onClick={() => addText(element)}>📝</button>
+        <button onClick={() => addVariable(element)}>🐖</button>
       </div>;
     case ElementType.Text:
       return <div>📝
-        <input value={element.text} onChange={e => updateCell({...element, text: e.target.value})}/>
+        <input id={element.id} value={element.text} onChange={e => {
+            updateCell({...element, text: e.target.value})
+            // FIXME lame fix because the focus is lost in rerender
+            setTimeout(() =>
+              document.getElementById(element.id)?.focus(), 100
+            )
+          }
+        }/>
         <button onClick={() => deleteCell(element)}>❌</button>
       </div>;
     case ElementType.Variable:
-      return <div>🔑
-        <input value={element.key} onChange={e => updateCell({...element, key: e.target.value})}/>
+      return <div>🐖
+        <select defaultValue={element.key} onChange={e => updateCell({...element, key: e.target.value as SowKey})}>
+          {AllSowKeys.map(key => <option value={key}>{key}</option>)}
+        </select>
         <button onClick={() => deleteCell(element)}>❌</button>
       </div>;
   }
@@ -111,11 +122,16 @@ function App() {
       parent.children = parent.children.filter(child => child.id !== r.id);
     });
   };
-  const addCell = (r: Row) => {
+  const addText = (r: Row) => {
     setModel(model => {
-      // fixme
-      const parent = findParentRow(model, r.id);
+      const parent = findRow(model, r.id);
       parent.children.push({kind: ElementType.Text, id: uuidv4(), text: "", span: 1});
+    });
+  };
+  const addVariable = (r: Row) => {
+    setModel(model => {
+      const parent = findRow(model, r.id);
+      parent.children.push({kind: ElementType.Variable, id: uuidv4(), key: AllSowKeys[0], span: 1});
     });
   };
   const deleteCell = (c: Cell) => {
@@ -124,11 +140,17 @@ function App() {
       parent.children = parent.children.filter(child => child.id !== c.id);
     });
   };
-  const updateCell = (c: Cell) => {};
+  const updateCell = (c: Cell) => {
+    setModel(model => {
+      const parent = findParentRow(model, c.id);
+      const i = parent.children.findIndex(child => child.id === c.id);
+      parent.children[i] = c;
+    });
+  };
   return (
     <div className="App" style={{display: "flex", flexDirection: "row", gap: "20px"}}>
       <div className="App" style={{display: "flex", flexDirection: "column", gap: "20px"}}>
-        <button onClick={addTable}>Add 📁</button>
+        <button onClick={addTable}>📁</button>
         <Tree
           data={model}
           onCreate={onCreate}
@@ -146,10 +168,10 @@ function App() {
           // padding={25 /* sets both */}
           // renderDragPreview={Node}
         >
-          {Node({deleteTable, addRow, deleteRow, addCell, deleteCell, updateCell})}
+          {Node({deleteTable, addRow, deleteRow, addText, addVariable, deleteCell, updateCell})}
         </Tree>
       </div>
-      <RendererC model={model} />
+      <RendererC model={model} sow={JSON.parse(sowString) || {}} />
       <div>
         <div>Sow Data</div>
         <textarea value={sowString} onChange={e => setSowString(e.target.value)} cols={40} rows={15}/>
