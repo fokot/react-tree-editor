@@ -1,5 +1,6 @@
 {
   "name": "react-tree-editor",
+  "homepage": "https://fokot.github.io/react-tree-editor",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
