@@ -63,7 +63,7 @@ function App() {
   const [sowString, setSowString] = React.useState(JSON.stringify(sowData, null, 2));
   const onCreate: CreateHandler<Element> = ({parentId, index, type}) => {
     console.log("onCreate"); return null;};
-  const onRename: RenameHandler<Element> = ({ id, name }) => {console.log("onRename");};
+  // const onRename: RenameHandler<Element> = ({ id, name }) => {console.log("onRename");};
   const onMove: MoveHandler<Element> = ({ dragIds, parentId, index }) => {
     setModel(
       model => {
@@ -91,7 +91,7 @@ function App() {
       }
     )
   };
-  const onDelete: DeleteHandler<Element>  = ({ ids }) => {console.log("onDelete");};
+  // const onDelete: DeleteHandler<Element>  = ({ ids }) => {console.log("onDelete");};
   const addTable = useCallback(() => setModel(draft =>
     {draft.push({kind: ElementType.Table, id: uuidv4(), children: []})}
   ), []);
