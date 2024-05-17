@@ -1,4 +1,7 @@
-# Getting Started with Create React App
+# React tree editor
+You can test the app [here](https://fokot.github.io/react-tree-editor).
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
