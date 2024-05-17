@@ -21,7 +21,7 @@ export const findElement = (model: Table[], id: string): Element => {
       }
     }
   }
-  throw `no element found for ${id}`;
+  throw new Error( `no element found for ${id}`);
 }
 
 export const findParentTable = (model: Table[], id: string): Table => {
@@ -30,7 +30,7 @@ export const findParentTable = (model: Table[], id: string): Table => {
       return element;
     }
   }
-  throw `no table parent found for ${id}`;
+  throw new Error( `no table parent found for ${id}`);
 }
 
 export const findTable = (model: Table[], id: string): Table => {
@@ -39,7 +39,7 @@ export const findTable = (model: Table[], id: string): Table => {
       return element;
     }
   }
-  throw `no table found for ${id}`;
+  throw new Error( `no table found for ${id}`);
 }
 
 export const findParentRow = (model: Table[], id: string): Row => {
@@ -50,7 +50,7 @@ export const findParentRow = (model: Table[], id: string): Row => {
       }
     }
   }
-  throw `no row parent found for ${id}`;
+  throw new Error( `no row parent found for ${id}`);
 }
 
 export const findRow = (model: Table[], id: string): Row => {
@@ -61,7 +61,7 @@ export const findRow = (model: Table[], id: string): Row => {
       }
     }
   }
-  throw `no row found for ${id}`;
+  throw new Error( `no row found for ${id}`);
 }
 
 export interface Table {
