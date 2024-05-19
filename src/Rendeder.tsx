@@ -1,5 +1,6 @@
-import {Cell, Element, ElementType, Row, Table} from "./model";
-import {match} from "node:assert";
+import {Cell, ElementType, Row, Table, Text} from "./model";
+import {useContext} from "react";
+import {EditingContext} from "./App";
 
 const border = "black solid 1px";
 const minHeight = "22px";
@@ -19,13 +20,22 @@ const RowC = (model: Row, sow: Object) =>
 const CellC = (model: Cell, sow: Object) => {
   switch (model.kind) {
     case ElementType.Text:
-      return <td key={model.id} colSpan={model.span}>{model.text}</td>;
+        return <TextC key={model.id} model={model} />;
     case ElementType.Variable:
       // @ts-ignore
       const text = sow[model.key] as string || `?${model.key}?`;
       return <td key={model.id} colSpan={model.span}>{text}</td>;
   }
 };
+
+const TextC = ({model}: {model: Text}) => {
+  const [editing, setEditing] = useContext(EditingContext)!;
+  if (model.id === editing.id) {
+    return <td colSpan={model.span}>{editing.text}</td>;
+  } else {
+    return <td colSpan={model.span}>{model.text}</td>;
+  }
+}
 
 
 interface RendererProps {
