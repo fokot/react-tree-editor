@@ -1,5 +1,5 @@
-import {Cell, Element, ElementType, Row, Table} from "./model";
-import {match} from "node:assert";
+import {Cell, ElementType, Row, Table, Text} from "./model";
+import {useStore} from "./App";
 
 const border = "black solid 1px";
 const minHeight = "22px";
@@ -19,7 +19,7 @@ const RowC = (model: Row, sow: Object) =>
 const CellC = (model: Cell, sow: Object) => {
   switch (model.kind) {
     case ElementType.Text:
-      return <td key={model.id} colSpan={model.span}>{model.text}</td>;
+      return <TextC key={model.id} model={model} />;
     case ElementType.Variable:
       // @ts-ignore
       const text = sow[model.key] as string || `?${model.key}?`;
@@ -27,6 +27,10 @@ const CellC = (model: Cell, sow: Object) => {
   }
 };
 
+const TextC = ({model}: {model: Text}) => {
+  const [editing] = useStore(store => store);
+  return <td colSpan={model.span}>{model.id === editing.id ? editing.text : model.text}</td>;
+}
 
 interface RendererProps {
   model: Table[];
