@@ -97,4 +97,20 @@ export interface Variable {
 // maybe interface with id and span will be better
 export type Cell = Text | Variable;
 
+export type TextValues = { [key: string]: string; };
+
+export const getTextValues = (model: Table[]): TextValues => {
+  let res = {};
+  for (const table of model) {
+    for (const row of table.children) {
+      for (const cell of row.children) {
+        if (cell.kind === ElementType.Text) {
+          res = { ...res, [cell.id]: cell.text };
+        }
+      }
+    }
+  }
+ return res;
+}
+
 
